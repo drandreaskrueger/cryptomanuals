@@ -81,6 +81,7 @@ du ~/.soil/chaindata/
 ```
 
 ## start node, and attach JSRE console
+in one terminal
 ```
 gsoil-1.3.3 js ~/SOIL/mainnetpeers.js
 ```

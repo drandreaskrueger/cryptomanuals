@@ -1,6 +1,8 @@
 # VPS @ scaleway = 2.99 EUR/month for 2 GB RAM
 
-Signup at https://www.scaleway.com then generate a ssh key (for windows see https://www.scaleway.com/docs/configure-new-ssh-key/):
+Signup at https://www.scaleway.com
+
+Then generate a ssh key (for windows see https://www.scaleway.com/docs/configure-new-ssh-key/):
 
 ```
 ssh-keygen -t rsa  
@@ -20,12 +22,12 @@ wait ~1 minute
 ```
 ssh root@163.172.162.229
 ```
-use your given IP address, of course. (where ever I say `ssh`, for Windows use [putty.exe](http://www.putty.org/) to connect to e.g. `163.172.162.229` with username `root`)
+use *your* shown IP address, of course. (whenever I say `ssh`, for Windows use [putty.exe](http://www.putty.org/) to connect to e.g. `163.172.162.229` with username `root`)
 
 Welcome to your own virtual server!  
 
 ### swap file
-
+If RAM runs out, there will be a swapfile:
 ```
 dd if=/dev/zero of=/swapfile bs=1M count=4096
 chmod 600 /swapfile
@@ -38,7 +40,7 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 ### updating & dependencies
 ```
 sudo apt-get update && sudo apt-get -y upgrade
-sudo apt-get install -y git build-essential curl libgmp3-dev
+sudo apt-get install -y curl git libgmp3-dev build-essential 
 ```
 
 ### golang
@@ -48,7 +50,7 @@ sudo tar -C /usr/local -xzf go1.6.3.linux-amd64.tar.gz
 rm go1.6.3.linux-amd64.tar.gz
 ```
 
-### user ```soil```
+### new user ```soil```
 ```
 adduser soil
 login soil

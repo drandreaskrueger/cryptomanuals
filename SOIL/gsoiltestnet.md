@@ -1,6 +1,6 @@
 # gsoiltestnet-1.4.1 instructions
 
-log into your new [VPS-scaleway.md](VPS-scaleway.md) VPS server, and login with user soil:
+log into your new [VPS-scaleway.md](VPS-scaleway.md) server, with user soil:
 ```
 ssh root@163.172.162.229
 login soil
@@ -19,7 +19,7 @@ source ~/.bashrc
 ### SOIL v1.4.1 testnet
 clone sources and build testnet client
 ```
-mkdir ~/SOIL
+mkdir -p ~/SOIL
 cd ~/SOIL
 git clone https://github.com/martymcfly2015/go-soil.git
 cd ~/SOIL/go-soil/
@@ -89,6 +89,7 @@ net.peerCount
 admin.peers
 admin.nodeInfo
 web3.version
+eth.accounts
 eth.getBalance(eth.coinbase)
 ```
 you have no coins - yet. 
@@ -118,7 +119,7 @@ top
 ```
 Maximum usage. 
 
-When you've had enough, check the coin balance, stop mining, and look at the CPU usage again.
+When you've had enough, check the coin balance, **stop mining**, and look at the CPU usage again.
 ```
 gsoiltestnet attach
 web3.fromWei(eth.getBalance(eth.coinbase), "soil")
@@ -131,11 +132,13 @@ A non-mining node is supporting the network, but does not need much resources.
 
 ### and now?
 
-"... does not need much resources". Which allows us to use the one VPS for two networks. For this testnet ^
+"... does not need much resources". Which allows us to use this one VPS for *two* networks. For this testnet ^
 
-and for the --> mainnet, which we can install on the same machine. Now continue in [gsoilmainnet-1.3.3.md](gsoilmainnet-1.3.3.md) if you want to.
+and for the --> mainnet, which we install on the same machine. Now continue in [gsoilmainnet-1.3.3.md](gsoilmainnet-1.3.3.md) if you want to.
 
-Thanks for trying this out. Keep the testnetnode running for a few days. Please report your `enode://...@IP:39340` in the [SOIL thread](https://bitcointalk.org/index.php?topic=1176709.new#new).
+Thanks for trying this out. 
+
+Keep the testnetnode running for a few days. Please report your `enode://...@IP:39340` in the [SOIL thread](https://bitcointalk.org/index.php?topic=1176709.new#new).
 
 ---
 
