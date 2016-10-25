@@ -34,8 +34,8 @@ ln -s ~/SOIL/go-soil/build/bin/gsoiltestnet ~/go/bin/
 cd ~
 ```
 
-#### peernodes
-create a file for easier starting later:
+#### Peernodes to connect to
+create a file `~/SOIL/testnetpeers.js` for easier starting later:
 ```
 cat > ~/SOIL/testnetpeers.js <<END_OF_MARKER
 admin.addPeer("enode://debbd72816d1c6cfbcfae37e842a6906b122b9a2b196419e39b3087383e3ff4500e462dde66d88cc08aac20c777f6e57ecfa2c541e824b7f528a061e97cf378b@192.52.166.129:39340")
@@ -60,16 +60,16 @@ ssh soil@163.172.162.229
 ```
 
 Create 2 accounts, perhaps with 1 passphrase - but better do not use the same passphrase as on mainnet.  
-One account for mining:
+One account for mining (will become your `eth.coinbase` account):
 ```
 gsoiltestnet account new
 ```
-One account for testing, donations, etc:
+One account for testing, donations, etc (will become your second account `eth.accounts[1]`):
 ```
 gsoiltestnet account new
 ```
 
-### attach JSRE console
+### Attach JSRE console
 ```
 gsoiltestnet attach
 ```
@@ -92,58 +92,61 @@ web3.version
 eth.accounts
 eth.getBalance(eth.coinbase)
 ```
-you have no coins - yet. 
 
-### start mining, DAG - and counting your mined coins:
-```
-miner.start()   
-```
-will first generate the DAG, necessary only once. Watch the other terminal, it takes ~15 minutes. 
+You have no coins - yet. For how to mine coins, see the manual [gsoil-mining.md](gsoil-mining.md) later.
 
-Then when the mining starts, it will tell you more than 0 for this (in my case 131979):
-```
-eth.hashrate
-```
+Or [tell us](https://bitcointalk.org/index.php?topic=1176709.new#new) one of your addresses, then we send testnet coins.
 
-and then you will find your first mined coins in your coinbase account:
-```
-web3.fromWei(eth.getBalance(eth.coinbase), "soil")
-```
 
-### stop mining, and CPU usage. 
+### Send money
 
-Now leave the JSRE, and look at the CPU usage during the mining:
+Check balances. Send coins. Check balances. 
 ```
-exit
-top
-```
-Maximum usage. 
+eth.accounts
 
-When you've had enough, check the coin balance, **stop mining**, and look at the CPU usage again.
+web3.fromWei(eth.getBalance(eth.accounts[0]), "soil")
+web3.fromWei(eth.getBalance(eth.accounts[1]), "soil")
+
+eth.sendTransaction({value:web3.toWei(42, "soil"), from:eth.coinbase, to:eth.accounts[1]})
 ```
-gsoiltestnet attach
-web3.fromWei(eth.getBalance(eth.coinbase), "soil")
-miner.stop()
-exit
-top
+then wait, until the transaction has been mined. You see that in the node output window/logfile. 
+
+After a while, 42 soil should have moved from one account to the other:
+```
+web3.fromWei(eth.getBalance(eth.accounts[0]), "soil")
+web3.fromWei(eth.getBalance(eth.accounts[1]), "soil")
 ```
 
-A non-mining node is supporting the network, but does not need much resources.
+### Longrunner - start node in background, and exit
 
-### and now?
+Please keep the testnetnode on for a few days; this is how to let it run in the background:
 
-"... does not need much resources". Which allows us to use this one VPS for *two* networks. For this testnet ^
-
-and for the --> mainnet, which we install on the same machine. **Now continue in [gsoilmainnet-1.3.3.md](gsoilmainnet-1.3.3.md) if you want to.**
-
-
-Keep the testnetnode on for a few days, this is how to let it run in the background:
 ```
 gsoiltestnet js ~/SOIL/testnetpeers.js > ~/SOIL/testnet-log.txt 2>&1 &
+```
+
+A non-mining node is supporting the network, and does not need much resources. So you can exit now:
+
+```
 exit
+```
+
+and when you log back in, it will still be there. Examine the situation with
+
+```
+ps aux | grep gsoiltestnet
+tail -n 50 ~/SOIL/testnet-log.txt
 ```
 
 Thanks for trying this out. Please report your `enode://...@IP:39340` in the [SOIL thread](https://bitcointalk.org/index.php?topic=1176709.new#new).
+
+
+### and now?
+
+^ "... and does not need much resources". Which allows us to use this one VPS for *two* networks. For this testnet ^
+
+and for the --> mainnet, which we install on the same machine. **Now continue in [gsoilmainnet-1.3.3.md](gsoilmainnet-1.3.3.md) if you want to.**
+
 
 ---
 
