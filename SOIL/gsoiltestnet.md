@@ -134,11 +134,16 @@ A non-mining node is supporting the network, but does not need much resources.
 
 "... does not need much resources". Which allows us to use this one VPS for *two* networks. For this testnet ^
 
-and for the --> mainnet, which we install on the same machine. Now continue in [gsoilmainnet-1.3.3.md](gsoilmainnet-1.3.3.md) if you want to.
+and for the --> mainnet, which we install on the same machine. **Now continue in [gsoilmainnet-1.3.3.md](gsoilmainnet-1.3.3.md) if you want to.**
 
-Thanks for trying this out. 
 
-Keep the testnetnode running for a few days. Please report your `enode://...@IP:39340` in the [SOIL thread](https://bitcointalk.org/index.php?topic=1176709.new#new).
+Keep the testnetnode on for a few days, this is how to let it run in the background:
+```
+gsoiltestnet js ~/SOIL/testnetpeers.js > ~/SOIL/testnet-log.txt 2>&1 &
+exit
+```
+
+Thanks for trying this out. Please report your `enode://...@IP:39340` in the [SOIL thread](https://bitcointalk.org/index.php?topic=1176709.new#new).
 
 ---
 
