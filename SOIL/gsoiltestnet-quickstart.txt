@@ -1,0 +1,82 @@
+
+# gsoil-1.4.1 testnet on scaleway VPS
+#
+# quickstart version of 
+# https://github.com/drandreaskrueger/cryptomanuals/blob/master/SOIL
+# VPS-scaleway.md and gsoiltestnet.md
+
+# to be done only once:
+# ssh key for https://cloud.scaleway.com/#/credentials
+# see https://github.com/drandreaskrueger/cryptomanuals/blob/master/SOIL/VPS-scaleway.md
+
+# create server
+# https://cloud.scaleway.com/#/servers/new
+# name it
+# VC1 2.99€/month (VC1S - 2 x86 64bit Cores, 2GB memory) 
+# image: Debian Jessie
+# create server
+
+ssh root@163.172.187.101
+
+dd if=/dev/zero of=/swapfile bs=1M count=4096
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile none swap defaults 0 0" >> /etc/fstab
+
+sudo apt-get update && sudo apt-get -y upgrade
+
+sudo apt-get install -y curl git jq libgmp3-dev build-essential 
+
+curl -O https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.6.3.linux-amd64.tar.gz
+rm go1.6.3.linux-amd64.tar.gz
+
+adduser soil
+
+login soil
+
+mkdir -p ~/go/bin
+echo "export GOPATH=\$HOME/go" >> ~/.bashrc
+echo "export PATH=\$PATH:\$HOME/go/bin:/usr/local/go/bin" >> ~/.bashrc
+source ~/.bashrc
+
+mkdir -p ~/SOIL
+cd ~/SOIL
+git clone https://github.com/martymcfly2015/go-soil.git
+cd ~/SOIL/go-soil/
+git checkout Testnet
+make
+
+mv build/bin/gsoil build/bin/gsoiltestnet
+ln -s ~/SOIL/go-soil/build/bin/gsoiltestnet ~/go/bin/
+cd ~
+
+gsoiltestnet account new
+
+gsoiltestnet account new
+
+cat > ~/SOIL/testnetpeers.js <<END_OF_MARKER
+admin.addPeer("enode://debbd72816d1c6cfbcfae37e842a6906b122b9a2b196419e39b3087383e3ff4500e462dde66d88cc08aac20c777f6e57ecfa2c541e824b7f528a061e97cf378b@192.52.166.129:39340")
+admin.addPeer("enode://dea8948426de2527d5d6d7b8a31f8a233813d850db480c1346db1b8fd16499f9f110ada786f844491dc79a99b148cb2a91113a82a6cb70856f87dc32f97b5fdf@163.172.185.74:39340")
+admin.addPeer("enode://ed51b7725c81f250e50c56e48a97ef674fac1e34621550aff9c082b70f2d4839f4812ce2f70a8e97f2e1c41b9f7e97d9881a727352cd005a2cb962020867dda4@163.172.162.229:39340")
+admin.addPeer("enode://e310e882ea6dc0e57472b21f9029d4633bc24682b032bcf19da7b9d70e1fde5dd3715b08c124b03e89c9069d980e77dbd6bbe8782668031d5c2a28c6569afb76@163.172.187.101:39340")
+END_OF_MARKER
+
+# start testnet node in background, so that you can log out:
+gsoiltestnet --rpc --rpcapi "admin" js ~/SOIL/testnetpeers.js > ~/SOIL/testnet-log.txt 2>&1 &
+
+ps aux | grep gsoiltestnet
+tail -n 50 ~/SOIL/testnet-log.txt
+
+# RPC query admin.nodeInfo - and your IP address
+curl -X POST --data '{"method":"admin_nodeInfo"}' http://localhost:39342 | jq '.| {name: .result.name, genesis: .result.protocols.eth.genesis, enode: .result.enode } '; curl icanhazip.com
+
+# please report that ^ output into the SOIL thread 
+# https://bitcointalk.org/index.php?topic=1176709.new#new
+# - thanks
+
+exit
+exit
+
+
