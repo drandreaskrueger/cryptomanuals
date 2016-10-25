@@ -109,7 +109,9 @@ web3.fromWei(eth.getBalance(eth.accounts[1]), "soil")
 
 eth.sendTransaction({value:web3.toWei(42, "soil"), from:eth.coinbase, to:eth.accounts[1]})
 ```
-then wait, until the transaction has been mined. You see that in the node output window/logfile. 
+input your passphrase, the answer should be a transaction hash.  
+
+Then wait, until the transaction has been mined. You see that in the node output window/logfile. 
 
 After a while, 42 soil should have moved from one account to the other:
 ```

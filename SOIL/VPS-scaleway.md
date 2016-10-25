@@ -22,7 +22,9 @@ wait ~1 minute
 ```
 ssh root@163.172.162.229
 ```
-use *your* shown IP address, of course. (whenever I say `ssh`, for Windows use [putty.exe](http://www.putty.org/) to connect to e.g. `163.172.162.229` with username `root`)
+use *your* shown IP address, of course. 
+
+(whenever I say `ssh`, for Windows use [putty.exe](http://www.putty.org/) to connect to e.g. `163.172.162.229` with username `root`)
 
 Welcome to your own virtual server!  
 

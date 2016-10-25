@@ -118,12 +118,13 @@ kill 21934
 ps aux | grep gsoil-1.3.3
 ```
 
-now you start it, in the background ("&"), with all output (stdout and stderr = "2>&1") 
-redirected (">") into the log file `~/SOIL/mainnet-log.txt` 
+now you start it, in the background ("&")
 
 ```
 gsoil-1.3.3 js ~/SOIL/mainnetpeers.js > ~/SOIL/mainnet-log.txt 2>&1 &
 ```
+
+and all output (stdout and stderr = "2>&1") gets redirected (">") into the log file `~/SOIL/mainnet-log.txt`. 
 
 #### check status
 
