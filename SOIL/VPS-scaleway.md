@@ -2,7 +2,8 @@
 
 Signup at https://www.scaleway.com
 
-Then generate a ssh key (for windows see https://www.scaleway.com/docs/configure-new-ssh-key/):
+Then generate a ssh key (for windows see 
+[PuTTYgen instructions](https://www.scaleway.com/docs/configure-new-ssh-key/#-On-windows)):
 
 ```
 ssh-keygen -t rsa  
