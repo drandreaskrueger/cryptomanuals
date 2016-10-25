@@ -1,9 +1,9 @@
 
 # gsoil-1.4.1 testnet on scaleway VPS
 #
-# quickstart version of 
+# quickstart version v02 of 
+# VPS-scaleway.md and gsoiltestnet.md and gsoil-mining.md in
 # https://github.com/drandreaskrueger/cryptomanuals/blob/master/SOIL
-# VPS-scaleway.md and gsoiltestnet.md
 
 # to be done only once:
 # ssh key for https://cloud.scaleway.com/#/credentials
@@ -16,7 +16,7 @@
 # image: Debian Jessie
 # create server
 
-ssh root@163.172.187.101
+ssh root@163.172.187.101   # or putty.exe for windows
 
 dd if=/dev/zero of=/swapfile bs=1M count=4096
 chmod 600 /swapfile
@@ -26,7 +26,7 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 
 sudo apt-get update && sudo apt-get -y upgrade
 
-sudo apt-get install -y curl git jq libgmp3-dev build-essential 
+sudo apt-get install -y curl git jq libgmp3-dev build-essential cpulimit
 
 curl -O https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.6.3.linux-amd64.tar.gz
@@ -64,7 +64,7 @@ admin.addPeer("enode://e310e882ea6dc0e57472b21f9029d4633bc24682b032bcf19da7b9d70
 END_OF_MARKER
 
 # start testnet node in background, so that you can log out:
-gsoiltestnet --rpc --rpcapi "admin" js ~/SOIL/testnetpeers.js > ~/SOIL/testnet-log.txt 2>&1 &
+gsoiltestnet --rpc --rpcapi "admin,miner,eth" js ~/SOIL/testnetpeers.js > ~/SOIL/testnet-log.txt 2>&1 &
 
 ps aux | grep gsoiltestnet
 tail -n 50 ~/SOIL/testnet-log.txt
@@ -78,5 +78,13 @@ curl -X POST --data '{"method":"admin_nodeInfo"}' http://localhost:39342 | jq '.
 
 exit
 exit
+
+
+# P.S.: ONLY if you want to start the CPUminer
+cpulimit -e gsoiltestnet -l 70 -b
+curl -X POST --data '{"method":"miner_start", "params":[]}' http://localhost:39342
+curl -X POST --data '{"method":"eth_mining"}'               http://localhost:39342
+curl -X POST --data '{"method":"eth_hashrate"}'             http://localhost:39342
+curl -X POST --data '{"method":"miner_stop"}'               http://localhost:39342
 
 
