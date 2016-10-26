@@ -1,5 +1,7 @@
 # gsoiltestnet-1.4.1 instructions
+Installation procedure with explanations, good for learning. If you are experienced, use the [quickstart](gsoiltestnet-quickstart.txt). Or for a more basic, quicker way: [this one (scroll down to 'Install')](https://community.c9.io/t/cryptocurrency-soil-start-node-how-to-doesnt-connect/10707#install). 
 
+### Install into your new VPS 
 log into your new [VPS-scaleway.md](VPS-scaleway.md) server, with user soil:
 ```
 ssh root@163.172.162.229
