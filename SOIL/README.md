@@ -10,3 +10,6 @@ and perhaps if you want to, also support the mainnet:
  
 Thanks.
 
+---
+
+(C) Andreas Krueger 2016, [SOIL] 0x82e6fac28f2c0d89b442f4b7c0d72fa47c54efa7
