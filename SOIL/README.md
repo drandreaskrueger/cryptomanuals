@@ -8,6 +8,10 @@ and perhaps if you want to, also support the mainnet:
 
  (4) keep running a mainnet node 24/7 -->  [gsoilmainnet-1.3.3.md](gsoilmainnet-1.3.3.md)
  
+and there are manuals for a working server with an 
+
+ (5) innovative smart contract and oracle I created --> [weathercontract](https://github.com/drandreaskrueger/weathercontract_user)
+ 
 Thanks.
 
 ---
